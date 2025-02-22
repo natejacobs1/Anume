@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'bus_data.dart';
+import 'settings.dart';
 
 void main() {
   runApp(BusFinderApp());
@@ -131,10 +132,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               leading: Icon(Icons.settings),
               title: Text('Settings'),
               onTap: () {
-                Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SettingsScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => SettingsScreen(),
+                  ),
                 );
               },
             ),
@@ -350,55 +352,6 @@ class BusSearchDelegate extends SearchDelegate {
           },
         );
       },
-    );
-  }
-}
-
-class SettingsScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: ListView(
-        children: [
-          ListTile(
-            leading: Icon(Icons.brightness_6),
-            title: Text('Dark Mode'),
-            trailing: Switch(
-              value: false, // TODO: Implement theme switching
-              onChanged: (bool value) {
-                // TODO: Implement theme switching
-              },
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.language),
-            title: Text('Language'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-              // TODO: Implement language selection
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Notifications'),
-            trailing: Switch(
-              value: true, // TODO: Implement notifications
-              onChanged: (bool value) {
-                // TODO: Implement notifications
-              },
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.info),
-            title: Text('App Version'),
-            subtitle: Text('1.0.0'),
-          ),
-        ],
-      ),
     );
   }
 }
