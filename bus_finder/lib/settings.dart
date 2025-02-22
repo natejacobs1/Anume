@@ -1,59 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'theme_provider.dart';
 
-class SettingsScreen extends StatefulWidget {
-  @override
-  _SettingsScreenState createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool isDarkMode = false;
-
+class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: ListView(
-        children: [
-          ListTile(
-            leading: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
-            title: Text('Dark Mode'),
-            trailing: Switch(
-              value: isDarkMode,
-              onChanged: (bool value) {
-                setState(() {
-                  isDarkMode = value;
-                });
-              },
-            ),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Settings'),
           ),
-          ListTile(
-            leading: Icon(Icons.language),
-            title: Text('Language'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-              // TODO: Implement language selection
-            },
+          body: ListView(
+            children: [
+              ListTile(
+                leading: Icon(Icons.brightness_6),
+                title: Text('Dark Mode'),
+                trailing: Switch(
+                  value: themeProvider.isDarkMode,
+                  onChanged: (bool value) {
+                    themeProvider.toggleTheme();
+                  },
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.language),
+                title: Text('Language'),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  // TODO: Implement language selection
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.notifications),
+                title: Text('Notifications'),
+                trailing: Switch(
+                  value: true, // TODO: Implement notifications
+                  onChanged: (bool value) {
+                    // TODO: Implement notifications
+                  },
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text('App Version'),
+                subtitle: Text('1.0.0'),
+              ),
+            ],
           ),
-          ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Notifications'),
-            trailing: Switch(
-              value: true, // TODO: Implement notifications
-              onChanged: (bool value) {
-                // TODO: Implement notifications
-              },
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.info),
-            title: Text('App Version'),
-            subtitle: Text('1.0.0'),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

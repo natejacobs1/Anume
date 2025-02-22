@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'bus_data.dart';
 import 'settings.dart';
+import 'theme_provider.dart';
 
 void main() {
-  runApp(BusFinderApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: BusFinderApp(),
+    ),
+  );
 }
 
 class BusFinderApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Mangalore Bus Finder',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Mangalore Bus Finder',
+          theme: themeProvider.themeData,
+          home: HomeScreen(),
+        );
+      },
     );
   }
 }
