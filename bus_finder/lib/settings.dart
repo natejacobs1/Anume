@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
+import 'notification_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
+    return Consumer2<ThemeProvider, NotificationProvider>(
+      builder: (context, themeProvider, notificationProvider, child) {
         return Scaffold(
           appBar: AppBar(
             title: Text('Settings'),
@@ -34,10 +35,25 @@ class SettingsScreen extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.notifications),
                 title: Text('Notifications'),
+                subtitle: Text(
+                  notificationProvider.notificationsEnabled 
+                    ? 'Enabled' 
+                    : 'Disabled'
+                ),
                 trailing: Switch(
-                  value: true, // TODO: Implement notifications
+                  value: notificationProvider.notificationsEnabled,
                   onChanged: (bool value) {
-                    // TODO: Implement notifications
+                    notificationProvider.toggleNotifications();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          value 
+                            ? 'Notifications enabled' 
+                            : 'Notifications disabled'
+                        ),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                   },
                 ),
               ),
